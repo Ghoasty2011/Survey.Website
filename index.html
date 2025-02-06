@@ -33,13 +33,15 @@
         <p id="question"></p>
         <input type="text" id="answer" placeholder="Your answer here">
         <button onclick="saveAnswer()">Next</button>
-        <button onclick="sendSurvey()">Send Survey</button>
     </div>
+
+    <!-- Send Survey Button -->
+    <button id="sendSurveyButton" onclick="sendSurvey()">Send Survey</button>
 
     <!-- Contact Us Form -->
     <div class="from">
         <h1>Contact Us</h1>
-        <form id="contactForm" action="https://formsubmit.co/adamgammer2011@gmail.com" method="POST">
+        <form id="contactForm" action="https://formsubmit.co/your@email.com" method="POST">
             <input type="text" name="name" required placeholder="Name">
             <input type="email" name="email" required placeholder="Email">
             <input type="text" name="subject" required placeholder="Subject">
@@ -66,10 +68,10 @@
         function showQuestion() {
             if (currentQuestionIndex >= questions.length) {
                 document.getElementById("question-container").innerHTML = "<h2>Thank you for completing the survey!</h2>";
-                return;
+            } else {
+                document.getElementById("question").innerText = questions[currentQuestionIndex];
+                document.getElementById("answer").value = "";
             }
-            document.getElementById("question").innerText = questions[currentQuestionIndex];
-            document.getElementById("answer").value = "";
         }
         
         function saveAnswer() {
