@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programming Survey</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        #question-container {
+            margin-top: 20px;
+        }
+        input, button {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .from {
+            margin-top: 30px;
+            border: 1px solid white;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Programming Survey</h1>
+    <div id="question-container">
+        <p id="question"></p>
+        <input type="text" id="answer" placeholder="Your answer here">
+        <button onclick="saveAnswer()">Next</button>
+        <button onclick="sendSurvey()">Send Survey</button>
+    </div>
+
+    <!-- Contact Us Form -->
+    <div class="from">
+        <h1>Contact Us</h1>
+        <form id="contactForm" action="https://formsubmit.co/adamgammer2011@gmail.com" method="POST">
+            <input type="text" name="name" required placeholder="Name">
+            <input type="email" name="email" required placeholder="Email">
+            <input type="text" name="subject" required placeholder="Subject">
+            <textarea name="msg" required placeholder="Message"></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        const questions = [
+            "What is your name?",
+            "How old are you?",
+            "What programming language do you use the most?",
+            "How many years of programming experience do you have?",
+            "What type of projects do you typically work on?",
+            "Do you prefer working alone or in a team?",
+            "What is your favorite code editor or IDE?",
+            "Which version control system do you use most frequently?"
+        ];
+        
+        let currentQuestionIndex = 0;
+        let responses = JSON.parse(localStorage.getItem("surveyResponses")) || {};
+        
+        function showQuestion() {
+            if (currentQuestionIndex >= questions.length) {
+                document.getElementById("question-container").innerHTML = "<h2>Thank you for completing the survey!</h2>";
+                return;
+            }
+            document.getElementById("question").innerText = questions[currentQuestionIndex];
+            document.getElementById("answer").value = "";
+        }
+        
+        function saveAnswer() {
+            const answer = document.getElementById("answer").value;
+            if (answer.trim() !== "") {
+                responses[questions[currentQuestionIndex]] = answer;
+                currentQuestionIndex++;
+                showQuestion();
+            }
+        }
+        
+        function sendSurvey() {
+            const surveyData = JSON.stringify(responses, null, 2);
+            const contactForm = document.getElementById("contactForm");
+            const messageInput = contactForm.querySelector('textarea[name="msg"]');
+            messageInput.value = `Survey Responses:\n\n${surveyData}`;
+
+            // Submit the form to send the survey via email
+            contactForm.submit();
+        }
+        
+        showQuestion();
+    </script>
+</body>
+</html>
