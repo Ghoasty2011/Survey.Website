@@ -89,8 +89,14 @@
             const messageInput = contactForm.querySelector('textarea[name="msg"]');
             messageInput.value = `Survey Responses:\n\n${surveyData}`;
 
+            // Log to console for debugging
+            console.log("Survey Data:", surveyData);
+
             // Submit the form to send the survey via email
             contactForm.submit();
+
+            // You can also log the submission attempt here
+            console.log("Form submitted!");
         }
         
         showQuestion();
